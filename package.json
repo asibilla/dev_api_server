@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack",
-    "start": "npm run develop",
-    "debug": "node --inspect --inspect-brk ./dist/index.js",
-    "develop": "nodemon --watch ./ -e ts,js --ignore ./node_modules --ignore ./.git --ignore ./dist --exec \"npm run build\""
+    "build": "webpack",
+    "start": "node ./dist/server.js",
+    "develop": "npm run build && npm start"
   },
   "repository": {
     "type": "git",
@@ -22,10 +21,12 @@
   "homepage": "https://github.com/asibilla/dev_server_starter#readme",
   "dependencies": {
     "@types/express": "^4.0.39",
+    "@types/request": "^2.0.8",
     "awesome-typescript-loader": "^3.4.1",
     "dotenv-webpack": "^1.5.4",
     "express": "^4.16.2",
     "node-couchdb": "^1.2.0",
+    "request": "^2.83.0",
     "webpack": "^3.10.0"
   },
   "devDependencies": {

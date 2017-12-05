@@ -4,8 +4,8 @@ const webpack = require('webpack');
 const dotenv = require('dotenv-webpack');
 const path = require('path');
 
-const BUILD_DIR = 'dist';
-const ENTRY = 'server/index.ts';
+const BUILD_DIR = './dist/';
+const ENTRY = './server/index.ts';
 
 /**
  * [exports description]
@@ -21,11 +21,10 @@ module.exports = (env={}) => {
   return {
     entry: [path.join(__dirname, ENTRY)],
     output: {
-      filename: 'index.js',
+      filename: 'server.js',
       path: path.join(__dirname, BUILD_DIR)
     },
     target: 'node',
-    devtool: '#source-map',
     module: {
       rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
@@ -33,6 +32,7 @@ module.exports = (env={}) => {
         ]
     },
     resolve: {
+      extensions: ['.ts', '.tsx', '.js'],
       alias: {
         '~': path.join(__dirname)
       }
