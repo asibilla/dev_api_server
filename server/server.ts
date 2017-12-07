@@ -1,16 +1,24 @@
 import * as express from 'express';
 import { DBConnect } from './db/db_connect';
+import * as path from 'path';
 
 // create server
 const app = express();
 
-app.get('/api', (req, res) => {
+app.use(express.static('dist'));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+
+  /*
   let connection = new DBConnect();
   connection.getAll().then(response => {
-    res.send(response).status(200);
+    res.send(__filename);
   }).catch(e => {
-    res.send(e).status(400);
+    res.send(__filename);
+    //res.sendFile(path.join(__filename, 'dist', 'index.html'));
   });
+  */
 });
 
 app.listen(4000, () => {

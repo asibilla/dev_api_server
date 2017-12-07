@@ -3,9 +3,10 @@
 const webpack = require('webpack');
 const dotenv = require('dotenv-webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const BUILD_DIR = './dist/';
-const ENTRY = './server/index.ts';
+const ENTRY = '/server/server.ts';
 
 /**
  * [exports description]
@@ -32,11 +33,15 @@ module.exports = (env={}) => {
         ]
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js'],
-      alias: {
-        '~': path.join(__dirname)
-      }
+      extensions: ['.ts', '.tsx', '.js']
     },
-    plugins: []
+    plugins: [
+      new HtmlWebpackPlugin(
+        {
+          filename: 'index.html',
+          template: 'client/index.html'
+        }
+      )
+    ]
   };
 };
