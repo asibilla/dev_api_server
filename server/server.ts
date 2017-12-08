@@ -5,6 +5,12 @@ import * as path from 'path';
 // create server
 const app = express();
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
@@ -16,7 +22,7 @@ app.get('/api', (req: express.Request, res) => {
   let dbQuery = new DBConnect();
   dbQuery.get(req.query.db, document)
     .then(response => {
-      res.send(response).status(200);
+      res.json(response).status(200);
     })
     .catch(e => {
       res.send(e).status(404);
