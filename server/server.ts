@@ -9,16 +9,19 @@ app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});
 
-  /*
-  let connection = new DBConnect();
-  connection.getAll().then(response => {
-    res.send(__filename);
-  }).catch(e => {
-    res.send(__filename);
-    //res.sendFile(path.join(__filename, 'dist', 'index.html'));
-  });
-  */
+app.get('/api', (req: express.Request, res) => {
+  let document = req.query.doc || null;
+  let dbQuery = new DBConnect();
+  dbQuery.get(req.query.db, document)
+    .then(response => {
+      res.send(response).status(200);
+    })
+    .catch(e => {
+      res.send(e).status(404);
+    }
+  );
 });
 
 app.listen(4000, () => {

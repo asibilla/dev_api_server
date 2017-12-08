@@ -9,17 +9,21 @@ export class DBConnect {
     return host;
   }
 
-  getAll() {
+  get(db: string, doc: string = null): Promise<any> {
     return new Promise((resolve, reject) => {
+      let url = this.host + '/' + db + '/';
+      if (doc) {
+        url += doc;
+      }
       request({
-        url: this.host + '/' + this.testDB + '/_all_docs',
+        url: url,
         json: true
       }, (err, res, body) => {
         if (err) {
           reject(err);
         }
         else {
-          resolve(body.rows);
+          resolve(body);
         }
       })
     });
