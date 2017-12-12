@@ -4,6 +4,7 @@ import * as path from 'path';
 
 // create server
 const app = express();
+let dbQuery = new DBConnect();
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -17,17 +18,30 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
 
-app.get('/api', (req: express.Request, res) => {
+app.use('/api', (req: express.Request, res) => {
   let document = req.query.doc || null;
-  let dbQuery = new DBConnect();
-  dbQuery.get(req.query.db, document)
-    .then(response => {
-      res.json(response).status(200);
-    })
-    .catch(e => {
-      res.send(e).status(404);
-    }
-  );
+
+  if (req.query.action === 'post') {
+    console.log(req.query);
+    dbQuery.put(req.query.db, document)
+      .then(body => {
+        res.json(body).status(200);
+      })
+      .catch(e => {
+        res.json({"error": e}).status(500);
+      }
+    );
+  }
+  else {
+    dbQuery.get(req.query.db, document)
+      .then(response => {
+        res.json(response).status(200);
+      })
+      .catch(e => {
+        res.send(e).status(404);
+      }
+    );
+  }
 });
 
 app.listen(4000, () => {
