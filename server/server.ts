@@ -44,6 +44,6 @@ app.use('/api', (req: express.Request, res) => {
   }
 });
 
-app.listen(4000, () => {
-  console.log('the server is running');
+app.listen(process.env.SERVER_PORT, () => {
+  console.log('the server is running on port ' + process.env.SERVER_PORT);
 });

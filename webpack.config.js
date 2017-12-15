@@ -14,11 +14,6 @@ const ENTRY = '/server/server.ts';
  */
 module.exports = (env={}) => {
 
-  process.env.DB_HOST = env.DB_HOST;
-  process.env.DB_USER = env.DB_USER;
-  process.env.DB_PORT = env.DB_PORT;
-  process.env.DB_PASSWORD = env.DB_PASSWORD;
-
   return {
     entry: [path.join(__dirname, ENTRY)],
     output: {
@@ -41,7 +36,10 @@ module.exports = (env={}) => {
           filename: 'index.html',
           template: 'client/index.html'
         }
-      )
+      ),
+      new dotenv({
+        path: path.join(__dirname, '.env')
+      })
     ]
   };
 };

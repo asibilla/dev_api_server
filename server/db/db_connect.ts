@@ -1,13 +1,7 @@
 import * as request from 'request';
-import { host, test_db } from './db_constants';
 
 export class DBConnect {
-  private host: string = host;
-  private testDB: string = test_db;
-
-  init() {
-    return host;
-  }
+  private host: string = process.env.DB_HOST;
 
   getUrl(db: string, doc: string = null): string {
     let url = this.host + db;
