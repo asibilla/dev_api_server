@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', (req: express.Request, res) => {
   let document = req.query.doc || null;
+  let queryString = req.query.query || null;
 
   if (req.query.action === 'post') {
     dbQuery.put(req.query.db, document)
@@ -32,7 +33,7 @@ app.use('/api', (req: express.Request, res) => {
     );
   }
   else {
-    dbQuery.get(req.query.db, document)
+    dbQuery.get(req.query.db, document, queryString)
       .then(response => {
         res.json(response).status(200);
       })
